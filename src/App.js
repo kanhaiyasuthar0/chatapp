@@ -1,23 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Chat from "./components/Chat";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import PrivateRoute from "./components/PrivateRute/PrivateRoute";
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("isLoggedIn") ?? false);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ padding: "10px" }}>
+      <h1>Welcome to GupShupIndia</h1>
+
+      <Router>
+        <Routes>
+        <Route path="/" element={<Login  setIsAuthenticated={setIsAuthenticated}/>} />
+          <Route path="/login" element={<Login  setIsAuthenticated={setIsAuthenticated}/>} />
+          <Route path="/register" element={<Register />} />
+
+          {isAuthenticated && <Route path="/chat" element={<Chat />} />}
+        </Routes>
+      </Router>
     </div>
   );
 }
