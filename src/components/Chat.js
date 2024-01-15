@@ -6,7 +6,7 @@ import axios from "axios";
 import ListOfFriends from "./Chat/ListOfFriends";
 import ChatWindow from "./Chat/ChatWindow";
 
-const socket = io.connect("http://localhost:3001");
+const socket = io.connect(process.env.REACT_APP_BASE_URL);
 
 function Chat() {
   const [message, setMessage] = useState("");
@@ -23,10 +23,10 @@ function Chat() {
   const [senderId, setSenderId] = useState("");
   async function getPublicKey(friendId) {
     const resp = await axios.get(
-      `http://localhost:3001/api/users/${friendId}/public-key`
+      `${process.env.REACT_APP_BASE_URL}/api/users/${friendId}/public-key`
     );
     const myresp = await axios.get(
-      `http://localhost:3001/api/users/${userId}/public-key`
+      `${process.env.REACT_APP_BASE_URL}/api/users/${userId}/public-key`
     );
     setPublicKey(resp.data.publicKey);
     setMyPublicKey(myresp.data.publicKey);
@@ -51,7 +51,7 @@ function Chat() {
   const fetchChat = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/api/chat/${userId}/${openedWindowForFriend}`
+        `${process.env.REACT_APP_BASE_URL}/api/chat/${userId}/${openedWindowForFriend}`
       );
       let arr = response.data.map((item) => ({
         message: item.message,
@@ -97,7 +97,7 @@ function Chat() {
     // Assuming you have a function to get the recipient's username or ID
     const recipientUsername = openedWindowForFriend; // Replace with actual recipient's username
     const response = await axios.get(
-      `http://localhost:3001/api/users/${recipientUsername}/public-key`
+      `${process.env.REACT_APP_BASE_URL}/api/users/${recipientUsername}/public-key`
     );
     setRecipientPublicKey(response.data.publicKey);
     console.log("🚀 ~ sendMessage ~ response:", response.data.publicKey.length);

@@ -78,7 +78,7 @@ const ChatWindow = (props) => {
   const fetchChat = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/api/chat/${userId}/${friendId}`
+        `${process.env.REACT_APP_BASE_URL}{/api/chat/${userId}/${friendId}`
       );
       let arr = response.data.map((item) => ({
         message: item.message,
@@ -102,7 +102,7 @@ const ChatWindow = (props) => {
 
       // Send the image to the server
       axios
-        .post("http://localhost:3001/api/upload", formData, {
+        .post(`${process.env.REACT_APP_BASE_URL}/api/upload`, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -163,7 +163,7 @@ const ChatWindow = (props) => {
             />
             {msg.image ? (
               <img
-                src={`http://localhost:3001/${msg.image}`}
+                src={`${process.env.REACT_APP_BASE_URL}/${msg.image}`}
                 alt="Uploaded"
                 style={{ maxWidth: "100%", height: "auto" }}
               />

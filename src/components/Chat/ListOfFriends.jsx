@@ -57,7 +57,7 @@ const ListOfFriends = (props) => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/api/users/${userId}/friends`)
+      .get(`${process.env.REACT_APP_BASE_URL}/api/users/${userId}/friends`)
       .then((response) => {
         setFriends(response.data);
       })
@@ -66,7 +66,7 @@ const ListOfFriends = (props) => {
 
   const handleAddFriend = () => {
     axios
-      .post(`http://localhost:3001/api/users/${userId}/add-friend`, {
+      .post(`${process.env.REACT_APP_BASE_URL}/api/users/${userId}/add-friend`, {
         friendId: newFriendId,
       })
       .then(() => {

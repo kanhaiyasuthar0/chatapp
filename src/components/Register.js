@@ -42,7 +42,7 @@ function Register() {
 
     try {
       // Include publicKey in the registration request
-      const response = await axios.post('http://localhost:3001/api/register', { username, password, publicKey });
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/register`, { username, password, publicKey });
       console.log(response.data);
       // Handle registration logic (e.g., showing a success message, redirecting to login)
       navigate("/login");
