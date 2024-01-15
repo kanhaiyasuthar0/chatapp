@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#e5ddd5",
     height: "75vh",
     overflow: "auto",
+    borderRadius: "5px", 
   },
   friendsList: {
     width: "100%",
@@ -40,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#128C7E", // WhatsApp green color
     color: "white",
     padding: theme.spacing(1),
-    width: "100%",
+    width: "94%",
     textAlign: "center",
     fontSize: "20px",
     display: "flex",
