@@ -34,6 +34,7 @@ function Login(props) {
       // Store the token for authenticated requests
       localStorage.setItem('authToken', response.data.token);
       localStorage.setItem('userId', response.data.userId);
+      localStorage.setItem('publicKey', response.data?.publicKey);
       // At this point, the private key should already be in local storage from registration
       console.log('Logged in successfully');
       // Redirect to chat or another appropriate component
