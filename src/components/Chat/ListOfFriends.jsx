@@ -55,7 +55,7 @@ const ListOfFriends = (props) => {
   const [friends, setFriends] = useState([]);
   const userId = localStorage.getItem("userId");
   const [newFriendId, setNewFriendId] = useState("");
-
+  const [refetch, setRefetch] = useState(false);
   useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_BASE_URL}/api/users/${userId}/friends`)
@@ -63,7 +63,7 @@ const ListOfFriends = (props) => {
         setFriends(response.data);
       })
       .catch((error) => console.error("Error fetching friends:", error));
-  }, []);
+  }, [refetch]);
 
   const handleAddFriend = () => {
     axios
@@ -73,6 +73,8 @@ const ListOfFriends = (props) => {
       .then(() => {
         // Optionally, re-fetch friends list or update UI
         console.log("Friend added successfully");
+        setNewFriendId("")
+        setRefetch(!refetch)
       })
       .catch((error) => console.error("Error adding friend:", error));
   };
