@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useId } from "react";
+import React, { useState, useEffect, useId, useRef } from "react";
 import io from "socket.io-client";
 import nacl from "tweetnacl";
 import naclUtil from "tweetnacl-util";
 import axios from "axios";
 import ListOfFriends from "./Chat/ListOfFriends";
 import ChatWindow from "./Chat/ChatWindow";
+import { Button, Input } from '@material-ui/core';
 
 const socket = io.connect(process.env.REACT_APP_BASE_URL);
 
@@ -222,10 +223,38 @@ function Chat() {
     }
   };
   console.log("CHAT", chat);
+  const fileInputRef = useRef();
 
+  const handlePrivateKeyUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const privateKey = e.target.result;
+        localStorage.setItem('privateKey', privateKey); // Store in local storage
+      };
+      reader.readAsText(file);
+    }
+  };
   return (
     <div style={{ padding: "10px" }}>
       {/* <h2>Chat</h2> */}
+<div style={{margin : "0px 43%"}}>
+
+      <Input
+        type="file"
+        style={{ display: 'none' }}
+        inputRef={fileInputRef}
+        onChange={handlePrivateKeyUpload}
+        />
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => fileInputRef.current.click()}
+        >
+        Upload Private Key
+      </Button>
+        </div>
       <div
         className="chat-box"
         style={{

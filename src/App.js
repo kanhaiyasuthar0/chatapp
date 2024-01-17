@@ -53,6 +53,12 @@ function App() {
     <span style={{ color: 'white' }}>India</span>
   </div>
 </Typography>
+<div style={{margin : "0px 45%"}}>
+
+Hello, {
+ <span style={{color : "green"}}> {localStorage.getItem("userName") ?? ""}</span>
+}
+  </div>
       <Router>
         <Routes>
         <Route path="/" element={<Login  setIsAuthenticated={setIsAuthenticated}/>} />
