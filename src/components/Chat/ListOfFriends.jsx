@@ -84,7 +84,7 @@ const ListOfFriends = (props) => {
       <div className={classes.addFriend}>
         <TextField
           type="text"
-          label="Enter friend's mobile number"
+          label="Enter friend's mobile no."
           variant="outlined"
           value={newFriendId}
           onChange={(e) => setNewFriendId(e.target.value)}
