@@ -3,7 +3,8 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, TextField, Button, Container, Paper, Grid, Link as MuiLink } from '@material-ui/core';
-
+import nacl from 'tweetnacl';
+import naclUtil from 'tweetnacl-util';
 const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
@@ -29,8 +30,16 @@ function Login(props) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
+
+    const keyPair = nacl.box.keyPair();
+    const publicKey = naclUtil.encodeBase64(keyPair.publicKey);
+    const privateKey = naclUtil.encodeBase64(keyPair.secretKey);
+
+    // Store the private key in local storage (consider more secure alternatives)
+    localStorage.setItem('privateKey', privateKey);
     try {
-      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/login`, { username, password });
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/login`, { username, password, publicKey });
       // Store the token for authenticated requests
       localStorage.setItem('authToken', response.data.token);
       localStorage.setItem('userId', response.data.userId);

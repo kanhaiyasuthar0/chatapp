@@ -29,10 +29,12 @@ function Chat() {
       `${process.env.REACT_APP_BASE_URL}/api/users/${userId}/public-key`
     );
     setPublicKey(resp.data.publicKey);
+    localStorage.setItem("othersPublicKey", resp.data.publicKey)
     setMyPublicKey(myresp.data.publicKey);
   }
 
   function openingNewWIndow(friendId) {
+      console.log("🚀 ~ openingNewWIndow ~ friendId:", friendId)
       getPublicKey(friendId).then(() => {
         console.log("calling fetcher")
         setRefetch(!refetch)
@@ -124,6 +126,7 @@ function Chat() {
   const encryptMessage = (publicKey, message) => {
     // console.log("🚀 ~ encryptMessage ~ publicKey:", publicKey)
     var encoded;
+    publicKey = localStorage.getItem("othersPublicKey")
     try {
       encoded = naclUtil.decodeBase64(publicKey);
       // console.log("🚀 ~ decryptMessage ~ decodedPublicKey:", encoded)
@@ -139,7 +142,10 @@ function Chat() {
     const privateKey = naclUtil.decodeBase64(
       localStorage.getItem("privateKey")
     );
-    // console.log("🚀 ~ encryptMessage ~ privateKey:", privateKey.length)
+    if (privateKey.length !== 32) {
+      throw new Error("Invalid public key length");
+    }
+    console.log("🚀 ~ encryptMessage ~ privateKey:", message, nonce, encoded,privateKey, publicKey, encoded )
     const encryptedMessage = nacl.box(
       naclUtil.decodeUTF8(message),
       nonce,
@@ -178,6 +184,7 @@ function Chat() {
     const { nonce, encryptedMessage } = encryptedMsg;
     // console.log("🚀 ~ decryptMessage ~ pubkey:", pubkey, nonce, encryptedMessage, localStorage.getItem('privateKey'))
     let decodedPublicKey;
+    pubkey = localStorage.getItem('othersPublicKey');
     try {
       decodedPublicKey = naclUtil.decodeBase64(pubkey);
       // console.log("🚀 ~ decryptMessage ~ decodedPublicKey:", decodedPublicKey)

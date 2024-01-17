@@ -33,16 +33,16 @@ function Register() {
     e.preventDefault();
 
     // Generate public/private key pair
-    const keyPair = nacl.box.keyPair();
-    const publicKey = naclUtil.encodeBase64(keyPair.publicKey);
-    const privateKey = naclUtil.encodeBase64(keyPair.secretKey);
+    // const keyPair = nacl.box.keyPair();
+    // const publicKey = naclUtil.encodeBase64(keyPair.publicKey);
+    // const privateKey = naclUtil.encodeBase64(keyPair.secretKey);
 
     // Store the private key in local storage (consider more secure alternatives)
-    localStorage.setItem('privateKey', privateKey);
+    // localStorage.setItem('privateKey', privateKey);
 
     try {
       // Include publicKey in the registration request
-      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/register`, { username, password, publicKey });
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/register`, { username, password });
       console.log(response.data);
       // Handle registration logic (e.g., showing a success message, redirecting to login)
       navigate("/login");
