@@ -33,16 +33,19 @@ function Chat() {
     setMyPublicKey(myresp.data.publicKey);
   }
 
-  function openingNewWIndow(friendId) {
+  function openingNewWIndow(friendId, publicKey) {
       console.log("🚀 ~ openingNewWIndow ~ friendId:", friendId)
-      getPublicKey(friendId).then(() => {
+      localStorage.setItem("othersPublicKey", publicKey)
+      // getPublicKey(friendId).then(() => {
         console.log("calling fetcher")
-        setRefetch(!refetch)
-          setOpenedWindowForFriend(friendId);
+        // setRefetch(!refetch)
+        fetchChat(friendId)
+        setOpenedWindowForFriend(friendId);
+          
       const roomId = createRoomId(userId, friendId);
-      console.log("🚀 ~ openingNewWIndow ~ roomId:", roomId);
+      // console.log("🚀 ~ openingNewWIndow ~ roomId:", roomId);
       setRoom(roomId);
-    });
+    // });
   }
 
   const createRoomId = (userId, friendId) => {
@@ -50,10 +53,10 @@ function Chat() {
     return `room_${ids[0]}_${ids[1]}`;
   };
 
-  const fetchChat = async () => {
+  const fetchChat = async (friendId) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/api/chat/${userId}/${openedWindowForFriend}`
+        `${process.env.REACT_APP_BASE_URL}/api/chat/${userId}/${friendId ?? openedWindowForFriend}`
       );
       let arr = response.data.map((item) => ({
         message: item.message,
@@ -73,24 +76,27 @@ function Chat() {
       console.log("🚀 ~ socket.on ~ encryptedMsg:", encryptedMsg, publicKey);
       try {
         
-        fetchChat();
+        // fetchChat();
         // const decryptedMsg = decryptMessage(encryptedMsg);
         // console.log("🚀 ~ socket.on ~ decryptedMsg:", decryptedMsg)
-        // setChat([...chat, {message : encryptedMsg, sender : senderId ?? openedWindowForFriend }]);
+        setChat([...chat, {message : (encryptedMsg.message), sender : encryptedMsg.sender,  }]);
         // setRefetch(!refetch)
       } catch (error) {
         console.error("Decryption error", error);
       }
     });
     console.log("111")
+    // return () => {
+    //   socket.off("chat message");
+    // };
   }, [chat]);
 
-  useEffect(() =>{
-    console.log("222")
-    if(userId && openedWindowForFriend ) {
-        fetchChat();
-    }
-  }, [openedWindowForFriend])
+  // useEffect(() =>{
+  //   console.log("222")
+  //   if(userId && openedWindowForFriend ) {
+  //       fetchChat();
+  //   }
+  // }, [openedWindowForFriend])
 
   const sendMessage = async (e) => {
     e.preventDefault();

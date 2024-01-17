@@ -110,7 +110,7 @@ const ListOfFriends = (props) => {
         {friends.map((friend) => (
           <ListItem
             key={friend._id}
-            onClick={() => props.openingNewWIndow(friend._id)}
+            onClick={() => props.openingNewWIndow(friend._id, friend.publicKey)}
             button
           >
             <ListItemText primary={friend.username} />
