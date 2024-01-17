@@ -80,7 +80,7 @@ function Chat() {
         // fetchChat();
         // const decryptedMsg = decryptMessage(encryptedMsg);
         // console.log("🚀 ~ socket.on ~ decryptedMsg:", decryptedMsg)
-        setChat([...chat, {message : (encryptedMsg.message), sender : encryptedMsg.sender,  }]);
+        setChat([...chat, {message : (encryptedMsg.message), sender : encryptedMsg.sender, image : encryptedMsg.image }]);
         // setRefetch(!refetch)
       } catch (error) {
         console.error("Decryption error", error);

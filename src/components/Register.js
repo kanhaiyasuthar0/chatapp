@@ -28,6 +28,7 @@ function Register() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const [mobile, setMobile] = useState('');
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -41,7 +42,7 @@ function Register() {
     localStorage.setItem('privateKey', privateKey);
     try {
       // Include publicKey in the registration request
-      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/register`, { username, password,publicKey });
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/api/register`, { username, password,publicKey, mobile });
       console.log(response.data);
       downloadPrivateKey(privateKey);
 
@@ -85,6 +86,15 @@ function Register() {
             fullWidth
             required
           />
+          <TextField
+  type="text"
+  label="Mobile Number"
+  variant="outlined"
+  value={mobile}
+  onChange={(e) => setMobile(e.target.value)}
+  fullWidth
+  required
+/>
           <Button
             type="submit"
             variant="contained"

@@ -55,9 +55,9 @@ function App() {
 </Typography>
 <div style={{margin : "0px 45%"}}>
 
-Hello, {
- <span style={{color : "green"}}> {localStorage.getItem("userName") ?? ""}</span>
-}
+    {localStorage.getItem("userName") ? 
+ <span style={{color : "green"}}> {"Hello," + localStorage.getItem("userName") ?? ""}</span>
+ : ""}
   </div>
       <Router>
         <Routes>
