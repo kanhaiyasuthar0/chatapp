@@ -12,6 +12,23 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+@keyframes vibrate {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25%,
+  75% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+}
+
+.vibrating-button {
+  animation: vibrate 0.25s linear infinite;
+}
 
 .App-header {
   background-color: #282c34;
